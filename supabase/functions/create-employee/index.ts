@@ -1,12 +1,16 @@
+// @ts-ignore
 import { serve } from "https://deno.land/std@0.192.0/http/server.ts"
+// @ts-ignore
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
+
+declare const Deno: any;
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-serve(async (req) => {
+serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -80,7 +84,7 @@ serve(async (req) => {
       JSON.stringify({ user_id: newUser.user.id, message: 'User created successfully' }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     )
-  } catch (error) {
+  } catch (error: any) {
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400,
